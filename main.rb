@@ -1,13 +1,15 @@
 require 'telegram/bot'
 require_relative 'bot/request_handler'
-require_relative '.config'
+# require_relative '.config'
+
+token = ENV['ActiveVocabulary_token']
 
 
 puts "Process ID: #{Process.pid}. Starting listening..."
 
 loop do
   begin
-    Telegram::Bot::Client.run(TOKEN) do |bot|
+    Telegram::Bot::Client.run(token) do |bot|
       bot.listen do |rqst|
         Thread.start(rqst) do |rqst|
           begin
