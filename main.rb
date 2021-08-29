@@ -1,24 +1,25 @@
 require 'telegram/bot'
-require_relative 'bot/request_handler'
-require_relative 'config'
+require_relative 'bot/message_handler'
+require_relative '.config'
 
 puts "Process ID: #{Process.pid}. Starting listening..."
 
-loop do
+Telegram::Bot::Client.run(TOKEN) do |bot|
   begin
-    Telegram::Bot::Client.run(TOKEN) do |bot|
-      bot.listen do |rqst|
-        Thread.start(rqst) do |rqst|
-          begin
-            print "Incoming request: #{rqst}\n"
-            request_handler(rqst, bot)
-          rescue Exception => e
-            print "Couldn't process a request: #{e}\n"
-          end
-        end
+    start_time = Time.now.to_i
+
+    bot.listen do |message|
+      # Processing only messages that were sent after bot started running
+      next if start_time > message.date
+
+      begin
+        puts "Incoming message: #{message}"
+        message_handler(message, bot)
+      rescue Exception => e
+        puts "Error during processing a message #{message}: #{e}"
       end
     end
-  rescue Exception
-    print "Telegram API error\n"
+  rescue Telegram::Bot::Exceptions::ResponseError => e
+    retry if e.error_code.to_s == '502' # telegram things
   end
 end
