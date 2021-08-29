@@ -1,5 +1,6 @@
 require 'net/http'
 require 'json'
+require_relative '../models/card'
 
 
 class String
@@ -26,15 +27,26 @@ end
 
 def process_text(text)
   word = text.include?("*") ? text.string_between_markers("*", "*") : text
+
+  card = Card.new
   
   if word.nil?
-    "Couldn't process the sentence. Type /help to see examples of usage."
-  else
-    (text == word ? "" : text + "\n") + process_word(word)
+    card.definition = "Couldn't process the sentence. Type /help to see examples of usage."
+
+    return card
   end
+
+  card.word = word
+  card.definition = get_definition(word)
+
+  if text != word
+    card.sentence = text
+  end
+  
+  card
 end
 
-def process_word(word)
+def get_definition(word)
   word.gsub! " ", "%20" # API allows to look up multiple words 
 
   uri = 'https://api.dictionaryapi.dev/api/v2/entries/en/' + word
