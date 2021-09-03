@@ -1,0 +1,16 @@
+I, [2021-09-03T13:27:40.569274 #41222]  INFO -- : Starting listening...
+I, [2021-09-03T13:30:52.701232 #41695]  INFO -- : Starting listening...
+D, [2021-09-03T13:30:52.701295 #41695] DEBUG -- : Process ID: 41695
+I, [2021-09-03T13:32:54.231899 #41695]  INFO -- : Incoming request: The *Negus* ruled Ethiopia until the coup of 1974
+I, [2021-09-03T13:35:47.266185 #42186]  INFO -- : Starting listening...
+D, [2021-09-03T13:35:47.266361 #42186] DEBUG -- : Process ID: 42186
+I, [2021-09-03T13:35:53.832353 #42186]  INFO -- : Incoming request: The *Negus* ruled Ethiopia until the coup of 1974
+I, [2021-09-03T13:37:56.950002 #42186]  INFO -- : Incoming request: test
+I, [2021-09-03T13:43:41.620559 #43075]  INFO -- : Starting listening...
+D, [2021-09-03T13:43:41.620674 #43075] DEBUG -- : Process ID: 43075
+I, [2021-09-03T13:43:51.795662 #43075]  INFO -- : Incoming request: test
+I, [2021-09-03T13:44:09.384727 #43075]  INFO -- : Incoming request: night
+I, [2021-09-03T13:44:16.169811 #43075]  INFO -- : Incoming request: #<Telegram::Bot::Types::CallbackQuery:0x000055a4c80f4ca0>
+D, [2021-09-03T13:44:16.169928 #43075] DEBUG -- : req.message_id: 185
+E, [2021-09-03T13:44:16.170880 #43075] ERROR -- : Error during processing a request #<Telegram::Bot::Types::CallbackQuery:0x000055a4c80f4ca0>: undefined local variable or method `log' for main:Object
+Did you mean?  load

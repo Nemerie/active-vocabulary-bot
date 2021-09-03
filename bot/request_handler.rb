@@ -1,6 +1,7 @@
 require_relative 'process_text'
 require_relative 'commands'
 require_relative '../models/card'
+require_relative 'logger'
 
 Keyboard = Telegram::Bot::Types::InlineKeyboardMarkup
 Button = Telegram::Bot::Types::InlineKeyboardButton
@@ -11,13 +12,15 @@ def request_handler(request, bot)
     callback_handler(request, bot)
   when Telegram::Bot::Types::Message
     message_handler(request, bot)
+  else
+    $log.error "Unknown type of request: #{request}"
   end
 end
 
 def callback_handler(request, bot)
-  # p "req.message_id: #{request.message.message_id}"
-  # p "req.message: #{request.message.text}"
-  # p "request.data: #{request.data}"
+  $log.debug "req.message_id: #{request.message.message_id}"
+  $log.debug $log.shorten("req.message: #{request.message.text}", 50)
+  $log.debug "request.data: #{request.data}"
   bot.api.answer_callback_query(callback_query_id: request.id, text: "Success")
 end
 
@@ -30,7 +33,7 @@ def message_handler(message, bot)
     end
   end
 
-  # p message.message_id
+  $log.debug message.message_id
 
   card = process_text(message.text)
 
