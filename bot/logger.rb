@@ -6,7 +6,7 @@ class Logger
 
   # ignore debug method in production environment
   define_method(:debug) do |str|
-    _debug.bind(self).(str) if ENVIRONMENT == 'debug'
+    _debug.bind(self).(str) if Config.env == 'debug'
   end
 
   def shorten(str, n)
@@ -14,6 +14,8 @@ class Logger
   end
 end
 
-file = File.new('.log', 'a')
-file.sync = true
-$log = Logger.new(file)
+def initialize_logger
+  file = File.new('.log', 'a')
+  file.sync = true
+  $log = Logger.new(file)
+end

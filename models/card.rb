@@ -1,32 +1,32 @@
 require 'json'
+require 'pg'
+require_relative '../.config'
+
 
 class Card
-  attr_accessor :word, :sentence, :definition
-  attr_reader :id
+  attr_accessor :word, :sentence, :definition, :user_id
 
   def initialize
     @word = nil
     @sentence = nil
     @definition = nil
-    @id = 1 # todo
+    @user_id = nil
   end
 
-  def with_action(action)
-    card = Card.new
-    card.word = @word
-    card.sentence = @sentence
-    card.definition = @definition
-    card.instance_variable_set(:@action, action)
-
-    card
+  def find
+    # todo
   end
 
   def save
-    # to do: save the object in db
+    conn = PG.connect Config.db_credentials
+    conn.exec_params(
+      %q{ INSERT INTO cards (definition, user_id) VALUES ($1, $2) },
+      [@definition, @user_id]
+    )
   end
 
   def to_s
-    fields.values.join("\n")
+    [@word, @sentence, @definition].join("\n")
   end
 
   def to_json

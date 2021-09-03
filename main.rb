@@ -3,12 +3,13 @@ require_relative 'bot/request_handler'
 require_relative 'bot/logger'
 require_relative '.config'
 
+initialize_logger
 $log.info "Starting listening..."
-$log.debug "Process ID: #{Process.pid}" 
+$log.debug "Process ID: #{Process.pid}"
 
 start_time = Time.now.to_i
 
-Telegram::Bot::Client.run(TOKEN) do |bot|
+Telegram::Bot::Client.run(Config.token) do |bot|
   begin
 
     bot.listen do |request|

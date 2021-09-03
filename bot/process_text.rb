@@ -36,8 +36,14 @@ def process_text(text)
     return card
   end
 
-  card.word = word
+  card.word = word.capitalize
   card.definition = get_definition(word)
+
+  if card.definition == "Couldn't find the meaning of the word."
+    card.word = nil
+
+    return card
+  end
 
   if text != word
     card.sentence = text
